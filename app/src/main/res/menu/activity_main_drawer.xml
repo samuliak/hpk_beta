@@ -31,6 +31,10 @@
                 android:icon="@drawable/ic_history"
                 android:title="@string/history" />
             <item
+                android:id="@+id/nav_head"
+                android:icon="@drawable/ic_account_multiple"
+                android:title="@string/headCollege" />
+            <item
                 android:id="@+id/nav_contacts"
                 android:icon="@drawable/ic_contact_mail"
                 android:title="@string/contacts" />
