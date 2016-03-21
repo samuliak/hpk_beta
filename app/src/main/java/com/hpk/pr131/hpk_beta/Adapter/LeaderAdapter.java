@@ -1,18 +1,20 @@
 package com.hpk.pr131.hpk_beta.Adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.hpk.pr131.hpk_beta.DetailLeaderActivity;
 import com.hpk.pr131.hpk_beta.Object.Leader;
 import com.hpk.pr131.hpk_beta.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class LeaderAdapter extends BaseAdapter implements View.OnClickListener{
     private List<Leader> list = new ArrayList<>();
@@ -59,6 +61,17 @@ public class LeaderAdapter extends BaseAdapter implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        Log.e("samuliak", "Click in obj");
+        //Toast.makeText(context, "В процесі розробки. Вибачте за незручності",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(context, DetailLeaderActivity.class);
+//        ArrayList l = new ArrayList();
+        TextView name = (TextView) v.findViewById(R.id.leaderName);
+        for(int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(name.getText())){
+                intent.putExtra("OBJ", list.get(i));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                v.getContext().startActivity(intent);
+                break;
+            }
+        }
     }
 }

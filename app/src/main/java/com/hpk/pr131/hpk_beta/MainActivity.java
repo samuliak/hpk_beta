@@ -87,10 +87,13 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_replace) {
 
-        } else if (id == R.id.nav_contacts) {
-
-        } else if (id == R.id.nav_head) {
-            intent = new Intent(this, listAllLeadership.class);
+        } else if (id == R.id.nav_history) {
+            intent = new Intent(this, HistoryActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else if (id == R.id.nav_leader) {
+            intent = new Intent(this, ListAllLeadershipActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
 

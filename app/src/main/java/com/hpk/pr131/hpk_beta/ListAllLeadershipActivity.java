@@ -1,11 +1,11 @@
 package com.hpk.pr131.hpk_beta;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -18,11 +18,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class listAllLeadership extends AppCompatActivity {
+public class ListAllLeadershipActivity extends AppCompatActivity {
 
     private List<Leader> list = new ArrayList<>();
     private ProgressDialog progressDialog;
@@ -36,32 +41,45 @@ public class listAllLeadership extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarLeadership);
         setSupportActionBar(toolbar);
         lv = (ListView) findViewById(R.id.leaderList);
+        try {
+            FileInputStream fis = openFileInput(Constants.FILE_LEADERSHIP);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            list = (ArrayList<Leader>) is.readObject();
+            is.close();
+            fis.close();
+            adapter = new LeaderAdapter(getApplicationContext(), list);
+            lv.setAdapter(adapter);
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_teachers__college, menu);
+        getMenuInflater().inflate(R.menu.menu_leaders__college, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.refreshLeadership:
+            case R.id.refreshActivity:
                 progressDialog = new ProgressDialog(this);
                 new ParseLeadership().execute();
-
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private class ParseLeadership extends AsyncTask<Void, Integer, Void>{
+    private class ParseLeadership extends AsyncTask<Void, Integer, Void> {
 
         private Elements elementParse;
         private ArrayList<String> listOfName = new ArrayList<String>();
         private ArrayList<String> listOfPosition = new ArrayList<String>();
         private ArrayList<String> listOfWork = new ArrayList<String>();
+        private ArrayList<String> listOfDetailInfo = new ArrayList<>();
 
         @Override
         protected void onPreExecute() {
@@ -78,6 +96,18 @@ public class listAllLeadership extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.hide();
+            try {
+                FileOutputStream fos = openFileOutput(Constants.FILE_LEADERSHIP, Context.MODE_PRIVATE);
+                ObjectOutputStream os = new ObjectOutputStream(fos);
+                os.writeObject(list);
+                os.close();
+                fos.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             adapter = new LeaderAdapter(getApplicationContext(), list);
             lv.setAdapter(adapter);
         }
@@ -92,7 +122,7 @@ public class listAllLeadership extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             Document doc;
-            try{
+            try {
                 doc = Jsoup.connect(Constants.URL_LEADERSHIP).get();
                 list.clear();
                 listOfName.clear();
@@ -100,35 +130,53 @@ public class listAllLeadership extends AppCompatActivity {
                 listOfWork.clear();
                 elementParse = doc.select(".leadership-wrapper h1");
 
-                for(Element element : elementParse){
+                for (Element element : elementParse) {
                     listOfName.add(element.text());
                 }
                 publishProgress(0, elementParse.size());
 
-                for(String str : listOfName){
+                for (String str : listOfName) {
                     String[] words = str.split(" ");
-                    String position ="";
-                    for(int i=0; i<words.length; i++) {
+                    String position = "";
+                    for (int i = 0; i < words.length; i++) {
                         if (i > 2)
                             position += words[i] + " ";
                     }
-                    listOfName.set(listOfPosition.size(), words[0]+" "+words[1]+" "+words[2]);
+                    listOfName.set(listOfPosition.size(), words[0] + " " + words[1] + " " + words[2]);
                     listOfPosition.add(position);
                 }
 
                 elementParse = doc.select(".leadership-position");
-                for(Element element : elementParse){
+                for (Element element : elementParse) {
                     listOfWork.add(element.text());
                 }
 
-                for(int i=0; i<listOfName.size(); i++)
-                    list.add(new Leader(listOfName.get(i), listOfPosition.get(i), listOfWork.get(i)));
+                elementParse = doc.select(".leadership-wrapper p");
+                for(int i=0; i<elementParse.size(); i++)
+                    listOfDetailInfo.add("");
+                int count = 0;
+                for (int i = 0; i < elementParse.size(); i++) {
+                    publishProgress(i, elementParse.size());
+                    if (i<= 4)
+                        listOfDetailInfo.set(count,listOfDetailInfo.get(count)+elementParse.get(i).text()+" ");
+                    else if (i > 11 && i <= 13) {
+                            listOfDetailInfo.set(count, listOfDetailInfo.get(count) + elementParse.get(i).text() + " ");
+                        }
+                    else if (i > 15) {
+                        listOfDetailInfo.set(count, listOfDetailInfo.get(count) + elementParse.get(i).text() + " ");
+                    }
+                    else {
+                        count++;
+                        listOfDetailInfo.set(count, elementParse.get(i).text());
+                    }
+                }
+                for (int i = 0; i < listOfName.size(); i++)
+                    list.add(new Leader(listOfName.get(i), listOfPosition.get(i), listOfWork.get(i), listOfDetailInfo.get(i)));
 
-            }catch (IOException e){ e.printStackTrace(); }
-
-
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return null;
         }
     }
-
 }

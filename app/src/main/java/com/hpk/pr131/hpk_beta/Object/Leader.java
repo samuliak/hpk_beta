@@ -1,17 +1,18 @@
 package com.hpk.pr131.hpk_beta.Object;
 
-/**
- * Created by samuliak on 13.03.2016.
- */
-public class Leader {
+import java.io.Serializable;
+
+public class Leader implements Serializable{
     private String name;
     private String position;
     private String work;
+    private String detailInfo;
 
-    public Leader(String name, String position, String work) {
+    public Leader(String name, String position, String work, String detailInfo) {
         this.name = name;
         this.position = position;
         this.work = work;
+        this.detailInfo = detailInfo;
     }
 
     public String getName() {
@@ -25,4 +26,7 @@ public class Leader {
     public String getWork() {
         return work;
     }
+
+    public String getdDetailInfo() { return detailInfo; }
+
 }
