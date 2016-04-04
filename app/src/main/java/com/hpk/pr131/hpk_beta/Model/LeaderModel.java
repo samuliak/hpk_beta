@@ -1,14 +1,14 @@
-package com.hpk.pr131.hpk_beta.Object;
+package com.hpk.pr131.hpk_beta.Model;
 
 import java.io.Serializable;
 
-public class Leader implements Serializable{
+public class LeaderModel implements Serializable{
     private String name;
     private String position;
     private String work;
     private String detailInfo;
 
-    public Leader(String name, String position, String work, String detailInfo) {
+    public LeaderModel(String name, String position, String work, String detailInfo) {
         this.name = name;
         this.position = position;
         this.work = work;

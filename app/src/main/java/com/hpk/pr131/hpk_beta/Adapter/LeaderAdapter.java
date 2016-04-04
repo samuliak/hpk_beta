@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hpk.pr131.hpk_beta.DetailLeaderActivity;
-import com.hpk.pr131.hpk_beta.Object.Leader;
+import com.hpk.pr131.hpk_beta.Model.LeaderModel;
 import com.hpk.pr131.hpk_beta.R;
 
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import java.util.List;
 
 
 public class LeaderAdapter extends BaseAdapter implements View.OnClickListener{
-    private List<Leader> list = new ArrayList<>();
+    private List<LeaderModel> list = new ArrayList<>();
     private Context context;
 
-    public LeaderAdapter(Context context, List<Leader> list){
+    public LeaderAdapter(Context context, List<LeaderModel> list){
         this.context = context;
         if (list != null)
             this.list = list;

@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.hpk.pr131.hpk_beta.Adapter.LeaderAdapter;
-import com.hpk.pr131.hpk_beta.Object.Leader;
+import com.hpk.pr131.hpk_beta.Model.LeaderModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ListAllLeadershipActivity extends AppCompatActivity {
 
-    private List<Leader> list = new ArrayList<>();
+    private List<LeaderModel> list = new ArrayList<>();
     private ProgressDialog progressDialog;
     private LeaderAdapter adapter;
     private ListView lv;
@@ -44,7 +44,7 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
         try {
             FileInputStream fis = openFileInput(Constants.FILE_LEADERSHIP);
             ObjectInputStream is = new ObjectInputStream(fis);
-            list = (ArrayList<Leader>) is.readObject();
+            list = (ArrayList<LeaderModel>) is.readObject();
             is.close();
             fis.close();
             adapter = new LeaderAdapter(getApplicationContext(), list);
@@ -171,7 +171,7 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
                     }
                 }
                 for (int i = 0; i < listOfName.size(); i++)
-                    list.add(new Leader(listOfName.get(i), listOfPosition.get(i), listOfWork.get(i), listOfDetailInfo.get(i)));
+                    list.add(new LeaderModel(listOfName.get(i), listOfPosition.get(i), listOfWork.get(i), listOfDetailInfo.get(i)));
 
             } catch (IOException e) {
                 e.printStackTrace();

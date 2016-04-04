@@ -86,15 +86,20 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_events) {
 
         } else if (id == R.id.nav_replace) {
+            intent = new Intent(this, ReplacementActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
         } else if (id == R.id.nav_history) {
             intent = new Intent(this, HistoryActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+
         } else if (id == R.id.nav_leader) {
             intent = new Intent(this, ListAllLeadershipActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

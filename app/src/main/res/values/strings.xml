@@ -22,5 +22,7 @@
     <string name="transitionLeaderName">Транзакція</string>
     <string name="title_activity_detail_leader">detailLeader</string>
     <string name="title_activity_activity_suka">HistoryActivity</string>
+    <string name="title_activity_replacement">ReplacementActivity</string>
+
 
 </resources>
