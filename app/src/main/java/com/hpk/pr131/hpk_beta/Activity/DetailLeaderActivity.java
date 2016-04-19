@@ -1,10 +1,11 @@
-package com.hpk.pr131.hpk_beta;
+package com.hpk.pr131.hpk_beta.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.hpk.pr131.hpk_beta.Model.LeaderModel;
+import com.hpk.pr131.hpk_beta.R;
 
 public class DetailLeaderActivity extends AppCompatActivity {
 

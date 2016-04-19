@@ -9,12 +9,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.hpk.pr131.hpk_beta.MainActivity"
+    tools:context=".Activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        style="@style/MyButton"
+        android:theme="@style/MyButton"
+        android:text="MyButton style"/>
 
 </RelativeLayout>

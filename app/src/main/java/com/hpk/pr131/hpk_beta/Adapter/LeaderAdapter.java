@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.hpk.pr131.hpk_beta.DetailLeaderActivity;
+import com.hpk.pr131.hpk_beta.Activity.DetailLeaderActivity;
 import com.hpk.pr131.hpk_beta.Model.LeaderModel;
 import com.hpk.pr131.hpk_beta.R;
 
@@ -61,9 +61,7 @@ public class LeaderAdapter extends BaseAdapter implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        //Toast.makeText(context, "В процесі розробки. Вибачте за незручності",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(context, DetailLeaderActivity.class);
-//        ArrayList l = new ArrayList();
         TextView name = (TextView) v.findViewById(R.id.leaderName);
         for(int i = 0; i < list.size(); i++) {
             if (list.get(i).getName().equals(name.getText())){

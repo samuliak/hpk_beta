@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,10 +24,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListAllLeadershipActivity"
+            android:name=".Activity.ListAllLeadershipActivity"
             android:label="@string/title_activity_list_all_leadership"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DetailLeaderActivity" />
+        <activity android:name=".Activity.DetailLeaderActivity" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -37,13 +37,13 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".HistoryActivity"
+            android:name=".Activity.HistoryActivity"
             android:label="@string/title_activity_activity_suka"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ReplacementActivity"
+            android:name=".Activity.ReplacementActivity"
             android:label="@string/title_activity_replacement"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

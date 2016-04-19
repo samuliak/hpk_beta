@@ -1,4 +1,4 @@
-package com.hpk.pr131.hpk_beta;
+package com.hpk.pr131.hpk_beta.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.hpk.pr131.hpk_beta.Constants;
+import com.hpk.pr131.hpk_beta.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

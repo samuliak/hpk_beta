@@ -57,5 +57,8 @@
     <color name="red">#ff5252</color>
     <color name="light_grey">#E0E0E0</color>
 
+    <color name="indigo">#c986f9</color>
+    <color name="pink">#5f21f1</color>
+
 
 </resources>

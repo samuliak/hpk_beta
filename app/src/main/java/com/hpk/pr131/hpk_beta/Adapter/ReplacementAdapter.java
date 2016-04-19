@@ -1,64 +1,49 @@
 package com.hpk.pr131.hpk_beta.Adapter;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hpk.pr131.hpk_beta.Model.ReplaceModel;
 import com.hpk.pr131.hpk_beta.R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+public class ReplacementAdapter extends RecyclerView.Adapter<ReplacementAdapter.ViewHolder> {
+    private Map<String, List<ReplaceModel>> mDataset;
+    private List<String> listGroup;
 
-public class ReplacementAdapter extends BaseAdapter {
-    private List<ReplaceModel> list = new ArrayList<>();
-    private Context context;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(View v) {
+            super(v);
+        }
+    }
 
-    public ReplacementAdapter(List<ReplaceModel> list, Context context) {
-        this.context = context;
-        if (list != null)
-            this.list = list;
-
+    public ReplacementAdapter(Map<String, List<ReplaceModel>> myDataset, List<String> list) {
+        Log.e("samuliak", "Constructor ReplacementAdapter");
+        this.mDataset = myDataset;
+        this.listGroup = list;
     }
 
     @Override
-    public int getCount() {
-        return list.size();
+    public ReplacementAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                   int viewType) {
+//        View v = LayoutInflater.from(parent.getContext())
+//                .inflate(R.layout.replace_item, parent, false);
+//        ViewHolder vh = new ViewHolder(v);
+        return null;
     }
 
     @Override
-    public Object getItem(int position) {
-        return list.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        if (view == null)
-            view = inflater.inflate(R.layout.replacement, parent, false);
-        TextView group = (TextView) view.findViewById(R.id.group);
-        TextView pair = (TextView) view.findViewById(R.id.pair);
-        TextView replaced = (TextView) view.findViewById(R.id.replaced);
-        TextView subject = (TextView) view.findViewById(R.id.subject);
-        TextView teacher = (TextView) view.findViewById(R.id.teacher);
-        TextView audience = (TextView) view.findViewById(R.id.audience);
-        group.setText(list.get(position).getGroup());
-        pair.setText(list.get(position).getPair());
-        replaced.setText(list.get(position).getReplaced());
-        subject.setText(list.get(position).getSubject());
-        teacher.setText(list.get(position).getTeacher());
-        audience.setText(list.get(position).getAudience());
-        return view;
+    public int getItemCount() {
+        return mDataset.size();
     }
 }

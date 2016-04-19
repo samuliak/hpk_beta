@@ -1,4 +1,4 @@
-package com.hpk.pr131.hpk_beta;
+package com.hpk.pr131.hpk_beta.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.hpk.pr131.hpk_beta.Adapter.LeaderAdapter;
+import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.Model.LeaderModel;
+import com.hpk.pr131.hpk_beta.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

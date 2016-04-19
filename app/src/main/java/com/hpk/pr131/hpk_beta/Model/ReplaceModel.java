@@ -44,7 +44,7 @@ public class ReplaceModel implements Serializable{
     }
 
     public String toString(){
-        return group+", "+pair+", "+replaced+","
-                +subject+", "+teacher+","+audience;
+        return "Група: "+group+", Пара: "+pair+", Замінено: "+replaced+
+                ", Предмет: " +subject+", Викладач: "+teacher+", Ауд. "+audience;
     }
 }
