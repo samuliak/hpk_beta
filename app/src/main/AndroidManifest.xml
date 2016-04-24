@@ -44,6 +44,11 @@
             android:name=".Activity.ReplacementActivity"
             android:label="@string/title_activity_replacement"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.NewsActivity"
+            android:label="@string/title_activity_news"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.DetailNews"></activity>
     </application>
 
 </manifest>

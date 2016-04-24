@@ -60,7 +60,6 @@ public class HistoryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refreshActivity:
-                Log.e("samuliak","Click!");
                 progressDialog = new ProgressDialog(this);
                 new ParseHistory().execute();
                 break;
@@ -109,18 +108,14 @@ public class HistoryActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             Document doc;
-            Log.e("samuliak","doInBackground start");
             try {
                 doc = Jsoup.connect(Constants.URL_HISTORY).get();
                 History="";
                 elementParse = doc.select(".news-body p");
-                Log.e("samuliak","doInBackground element parse ");
                 StringBuilder stringBuilder = new StringBuilder();
-                Log.e("samuliak","size elementParse >> "+elementParse.size());
                 for(int i=0; i < elementParse.size(); i++){
                     stringBuilder.append("\n"+elementParse.get(i).text());
                 }
-                Log.e("samuliak","stringBuilder >> "+stringBuilder.toString());
                 History = stringBuilder.toString();
             } catch (IOException e) {
                 e.printStackTrace();

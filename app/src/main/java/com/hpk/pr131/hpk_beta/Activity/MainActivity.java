@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         Intent i;
         switch (view.getId()){
             case R.id.btnNews:
-
+                i = new Intent(this, NewsActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
                 break;
             case R.id.btnGallery:
 

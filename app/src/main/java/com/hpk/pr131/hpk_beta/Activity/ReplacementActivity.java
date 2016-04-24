@@ -22,7 +22,6 @@ import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.Model.ReplaceModel;
 import com.hpk.pr131.hpk_beta.R;
 
-import org.apache.poi.ss.formula.functions.Replace;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -68,8 +67,6 @@ public class ReplacementActivity extends AppCompatActivity {
             FileInputStream fis = openFileInput(Constants.FILE_REPLACEMENT);
             ObjectInputStream is = new ObjectInputStream(fis);
             listOfObj = (Map<String, List<ReplaceModel>>) is.readObject();
-            for (String key : listOfObj.keySet())
-                listGroup.add(key);
             is.close();
             fis.close();
             initCardViewInfo();
@@ -155,10 +152,12 @@ public class ReplacementActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = new ProgressDialog(ReplacementActivity.this);
             progressDialog.setMessage("Оновлення даних ...");
             progressDialog.setCancelable(false);
             progressDialog.setMax(100);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
         }
 
         @Override
@@ -212,7 +211,6 @@ public class ReplacementActivity extends AppCompatActivity {
                 ReplaceModel model;
                 String[] str = new String[6];
                 List<ReplaceModel> list = new ArrayList<>();
-                Log.e("samuliak", "///////////////////////////////////////");
                 int count = 0;
                 for(int i=0; i<elementParse.size(); i++){
                     if ( i > 5) {

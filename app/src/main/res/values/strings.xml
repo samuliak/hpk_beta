@@ -23,6 +23,7 @@
     <string name="title_activity_detail_leader">detailLeader</string>
     <string name="title_activity_activity_suka">HistoryActivity</string>
     <string name="title_activity_replacement">ReplacementActivity</string>
+    <string name="title_activity_news">NewsActivity</string>
 
 
 </resources>
