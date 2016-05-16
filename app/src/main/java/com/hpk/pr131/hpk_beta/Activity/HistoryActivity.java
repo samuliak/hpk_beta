@@ -43,7 +43,9 @@ public class HistoryActivity extends AppCompatActivity {
             History = (String) is.readObject();
             is.close();
             fis.close();
-            tv.setText(History);
+            String[] str = History.split("/n");
+            for(int i=0; i <str.length; i++)
+                tv.setText(tv.getText() + str[i]+"/n");
         } catch (IOException e) {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

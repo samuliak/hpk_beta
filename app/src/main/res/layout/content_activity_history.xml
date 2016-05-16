@@ -10,11 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activity.HistoryActivity"
-    tools:showIn="@layout/activity_history">
-
-    <TextView
-        android:id="@+id/historyCollege"
+    tools:showIn="@layout/activity_history"
+    android:background="@drawable/common_back">
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#4F879394"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/historyCollege"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingBottom="15dp"
+            android:textStyle="normal"
+            android:textSize="11sp"
+            android:textColor="@color/theme_red_text"/>
+    </android.support.v7.widget.CardView>
 </ScrollView>

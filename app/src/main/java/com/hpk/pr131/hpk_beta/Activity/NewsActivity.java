@@ -7,25 +7,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.hpk.pr131.hpk_beta.Adapter.NewsAdapter;
 import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.Model.NewsModel;
-import com.hpk.pr131.hpk_beta.Model.ReplaceModel;
 import com.hpk.pr131.hpk_beta.R;
 import com.hpk.pr131.hpk_beta.RecyclerClickListener;
 
@@ -35,7 +27,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,12 +34,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class NewsActivity extends AppCompatActivity {
     private volatile List<NewsModel> news_list = new ArrayList<>();
     private ProgressDialog progressDialog;
-    private Display display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +53,6 @@ public class NewsActivity extends AppCompatActivity {
                 new ParseNews().execute();
             }
         });
-
-        display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
         try {
             FileInputStream fis = openFileInput(Constants.FILE_NEWS);
             ObjectInputStream is = new ObjectInputStream(fis);
@@ -96,14 +83,19 @@ public class NewsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.hide();
+            progressDialog = null;
             try {
                 FileOutputStream fos = openFileOutput(Constants.FILE_NEWS, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);
+                Log.e("samuliak", "Початок запису. Розмір списку: " + news_list.size());
                 os.writeObject(news_list);
                 os.flush();
+                Log.e("samuliak", "Кінець запису");
                 os.close();
                 fos.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             initList();
         }
 
@@ -123,10 +115,20 @@ public class NewsActivity extends AppCompatActivity {
                     model.setURL(element.attr("href"));
                     news_list.add(model);
                 }
+                // Date add
+                elementParse = doc.select(".news-meta-date time");
+                int count = 0;
+                Log.e("samuliak", "elementparse.size > "+elementParse.size());
+                for(Element element : elementParse){
+                    model = news_list.get(count);
+                    model.setDate(element.text());
+                    news_list.set(count, model);
+                    count++;
+                }
 
                 elementParse = doc.select(".news-summary p");
                 // short_info add
-                int count = 0;
+               count = 0;
                 for(Element element : elementParse){
                     model = news_list.get(count);
                     model.setShort_Info(element.text());
@@ -176,8 +178,7 @@ public class NewsActivity extends AppCompatActivity {
                 new RecyclerClickListener(this, new RecyclerClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Intent intent = new Intent(NewsActivity.this, DetailNews.class);
-                        intent.putExtra("OBJ_INFO", news_list.get(position).getLong_Info());
-                        intent.putExtra("OBJ_URL", news_list.get(position).getURL_PHOTO());
+                        intent.putExtra("OBJ_ID",position);
                         startActivity(intent);
                     }
                 }));

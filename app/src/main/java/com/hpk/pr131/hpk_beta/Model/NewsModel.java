@@ -1,9 +1,9 @@
 package com.hpk.pr131.hpk_beta.Model;
 
 import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 public class NewsModel implements Serializable {
@@ -12,7 +12,8 @@ public class NewsModel implements Serializable {
     private String long_Info;
     private String URL;
     private String URL_PHOTO;
-    private Bitmap photo;
+    private String date;
+    private byte[] imageByteArray;
 
     public NewsModel() {
         title = "";
@@ -20,7 +21,11 @@ public class NewsModel implements Serializable {
         long_Info = "";
         URL = "";
         URL_PHOTO = "";
-        photo = null;
+        date = "";
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setLong_Info(String long_Info) {
@@ -43,7 +48,9 @@ public class NewsModel implements Serializable {
     }
 
     public void setPhoto(Bitmap photo) {
-        this.photo = photo;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        imageByteArray = stream.toByteArray();
     }
 
     public String getTitle() {
@@ -62,8 +69,13 @@ public class NewsModel implements Serializable {
         return URL;
     }
 
+    public String getDate() {
+        return date;
+    }
+
     public Bitmap getPhoto() {
-        return photo;
+        Bitmap image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
+        return image;
     }
 
     public String getURL_PHOTO() {

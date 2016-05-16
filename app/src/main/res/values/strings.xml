@@ -1,29 +1,29 @@
 <resources>
-    <string name="app_name">hpk_beta</string>
+    <string name="app_name">Хмельницький політехнічний коледж</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyB3QOKTU67VUF4yveJhDdSlgEDERRkHP3E</string>
 
-    <string name="events">Події</string>
     <string name="news">Новини</string>
     <string name="gallery">Галерея</string>
     <string name="replace">Заміни</string>
     <string name="timetable">Розклад</string>
-    <string name="contacts">Контакти</string>
+    <string name="contacts">Зв\'язок</string>
     <string name="map">Як добратися</string>
     <string name="history">Історія</string>
     <string name="settings">Налаштування</string>
     <string name="communicate">Зв\'язок</string>
-    <string name="headCollege">Керівництво коледжа</string>
+    <string name="headCollege">Керівництво</string>
+    <string name="applicants">Для вступників</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_list_all_leadership">Керівницво коледжа</string>
 
     <string name="transitionLeaderName">Транзакція</string>
-    <string name="title_activity_detail_leader">detailLeader</string>
-    <string name="title_activity_activity_suka">HistoryActivity</string>
-    <string name="title_activity_replacement">ReplacementActivity</string>
-    <string name="title_activity_news">NewsActivity</string>
+    <string name="title_activity_detail_leader">Детальна інформація</string>
+    <string name="title_activity_history">Історія коледжа</string>
+    <string name="title_activity_replacement">Заміни у розкладі</string>
+    <string name="title_activity_news">Новини і події</string>
 
 
 </resources>

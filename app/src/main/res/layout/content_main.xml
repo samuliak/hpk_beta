@@ -16,8 +16,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/MyButton"
-        android:theme="@style/MyButton"
+        android:background="@drawable/btn_style"
         android:text="MyButton style"/>
 
 </RelativeLayout>

@@ -2,10 +2,14 @@ package com.hpk.pr131.hpk_beta.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -24,8 +28,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +50,12 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         lv = (ListView) findViewById(R.id.leaderList);
         try {
+            Log.e("samuliak", "Start reading leadership");
             FileInputStream fis = openFileInput(Constants.FILE_LEADERSHIP);
             ObjectInputStream is = new ObjectInputStream(fis);
+            Log.e("samuliak", "Start reading list");
             list = (ArrayList<LeaderModel>) is.readObject();
+            Log.e("samuliak", "the reading is ok");
             is.close();
             fis.close();
             adapter = new LeaderAdapter(getApplicationContext(), list);
@@ -82,6 +91,7 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
         private ArrayList<String> listOfPosition = new ArrayList<String>();
         private ArrayList<String> listOfWork = new ArrayList<String>();
         private ArrayList<String> listOfDetailInfo = new ArrayList<>();
+        private ArrayList<Bitmap> listOfPhoto = new ArrayList<>();
 
         @Override
         protected void onPreExecute() {
@@ -90,7 +100,6 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
             progressDialog.setCancelable(false);
             progressDialog.setMax(100);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
             progressDialog.show();
         }
 
@@ -104,8 +113,6 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
                 os.writeObject(list);
                 os.close();
                 fos.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -130,12 +137,13 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
                 listOfName.clear();
                 listOfPosition.clear();
                 listOfWork.clear();
+                listOfPhoto.clear();
                 elementParse = doc.select(".leadership-wrapper h1");
 
                 for (Element element : elementParse) {
                     listOfName.add(element.text());
                 }
-                publishProgress(0, elementParse.size());
+                publishProgress(0, 10);
 
                 for (String str : listOfName) {
                     String[] words = str.split(" ");
@@ -147,33 +155,55 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
                     listOfName.set(listOfPosition.size(), words[0] + " " + words[1] + " " + words[2]);
                     listOfPosition.add(position);
                 }
+                publishProgress(2, 10);
 
                 elementParse = doc.select(".leadership-position");
                 for (Element element : elementParse) {
                     listOfWork.add(element.text());
                 }
+                publishProgress(4, 10);
+
+                elementParse = doc.select(".leadership-photo img");
+                for(int i=0; i<elementParse.size(); i++){
+                    InputStream inp = new java.net.URL(elementParse.attr("src")).openStream();
+                    Bitmap btm = BitmapFactory.decodeStream(inp);
+                    listOfPhoto.add(btm);
+                }
+                Log.e("samuliak", "listofPhoto size > "+listOfPhoto.size());
+                publishProgress(6, 10);
 
                 elementParse = doc.select(".leadership-wrapper p");
                 for(int i=0; i<elementParse.size(); i++)
                     listOfDetailInfo.add("");
+                publishProgress(8, 10);
+
                 int count = 0;
                 for (int i = 0; i < elementParse.size(); i++) {
-                    publishProgress(i, elementParse.size());
-                    if (i<= 4)
-                        listOfDetailInfo.set(count,listOfDetailInfo.get(count)+elementParse.get(i).text()+" ");
+                    if (i<= 4) {
+                        Log.e("samuliak", "parse detail info:" + elementParse.get(i).text());
+                        listOfDetailInfo.set(count, listOfDetailInfo.get(count) + elementParse.get(i).text() + " ");
+                    }
                     else if (i > 11 && i <= 13) {
+                        Log.e("samuliak", "parse detail info:" + elementParse.get(i).text());
                             listOfDetailInfo.set(count, listOfDetailInfo.get(count) + elementParse.get(i).text() + " ");
                         }
                     else if (i > 15) {
+                        Log.e("samuliak", "parse detail info:" + elementParse.get(i).text());
                         listOfDetailInfo.set(count, listOfDetailInfo.get(count) + elementParse.get(i).text() + " ");
                     }
                     else {
                         count++;
+                        Log.e("samuliak", "parse detail info:" + elementParse.get(i).text());
                         listOfDetailInfo.set(count, elementParse.get(i).text());
                     }
                 }
-                for (int i = 0; i < listOfName.size(); i++)
-                    list.add(new LeaderModel(listOfName.get(i), listOfPosition.get(i), listOfWork.get(i), listOfDetailInfo.get(i)));
+                publishProgress(10, 10);
+                for (int i = 0; i < listOfName.size(); i++) {
+                    LeaderModel leader = new LeaderModel(listOfName.get(i), listOfPosition.get(i), listOfWork.get(i),
+                            listOfDetailInfo.get(i));
+                    leader.setPhoto(listOfPhoto.get(i));
+                    list.add(leader);
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();

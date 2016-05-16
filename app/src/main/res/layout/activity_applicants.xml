@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.hpk.pr131.hpk_beta.Activity.Applicants"
+    android:orientation="vertical"
+    android:background="@drawable/common_back">
+
+    <android.support.v7.widget.CardView
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardUseCompatPadding="false"
+        app:cardBackgroundColor="#4F879394">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal = "true"
+                android:text="Для вступників"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/common_plus_signin_btn_text_light_disabled"
+                android:gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/under_text"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/tv1"
+                android:paddingTop="5dp"
+                android:background="@color/common_plus_signin_btn_text_light_disabled"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/tv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/under_text"
+                android:text="Хмельницький політехнічний коледж"
+                android:textSize="15sp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/theme_red_accent"/>
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv2"
+                android:text="проводить набір на підготовчі курси для випускників середніх шкіл, гімназій, ліцеїв, професійно-технічних навчальних закладів."
+                android:textSize="11sp"
+                android:gravity="fill_horizontal"
+                android:textColor="@color/common_action_bar_splitter"/>
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv3"
+                android:text="Підготовка слухачів здійснюється за такими дисциплінами:"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/theme_red_accent"/>
+
+            <TextView
+                android:id="@+id/tv5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv4"
+                android:text="- українська мова та література;"
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+
+            <TextView
+                android:id="@+id/tv6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv5"
+                android:text="- математика."
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+
+            <TextView
+                android:id="@+id/tv7"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv6"
+                android:text="Тривалість навчання: 2,5 – 3 місяців."
+                android:textSize="12sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+
+            <TextView
+                android:id="@+id/tv8"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv7"
+                android:text="На Підготовчих курсах Ви маєте можливість:"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/theme_red_accent"/>
+
+            <TextView
+                android:id="@+id/tv9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv8"
+                android:text="- отримати знання, які допоможуть Вам стати студентом Хмельницького політехнічного коледжу;"
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+            <TextView
+                android:id="@+id/tv10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv9"
+                android:text="- підвищити оцінку з математики у школі;"
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+            <TextView
+                android:id="@+id/tv11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv10"
+                android:text="- успішно скласти державну підсумкову атестацію з математики;"
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+            <TextView
+                android:id="@+id/tv12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv11"
+                android:text="- познайомитися з відділеннями і спеціальностями, для того щоб визначитися з вибором професії;"
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+            <TextView
+                android:id="@+id/tv13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv12"
+                android:text="- познайомитися з викладачами та студентами, знайти нових друзів."
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+
+            <TextView
+                android:id="@+id/tv14"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv13"
+                android:text="Документи:"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/theme_red_accent"/>
+            <TextView
+                android:id="@+id/tv15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv14"
+                android:text="- заява учня."
+                android:textSize="11sp"
+                android:gravity="left"
+                android:textColor="@color/common_action_bar_splitter"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

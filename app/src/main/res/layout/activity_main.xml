@@ -8,83 +8,109 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.hpk.pr131.hpk_beta.Activity.MainActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/menu_back">
 
     <ImageView
         android:id="@+id/aplName"
+        android:layout_width="fill_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/menu_img" />
+    <LinearLayout
+        android:id="@+id/linearBelowImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/apl_name" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_below="@+id/aplName"
-        android:orientation="vertical">
+
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <Button
                 android:id="@+id/btnNews"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Новини"
-                android:theme="@style/MyButton"
+                android:text="@string/news"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
                 android:onClick="menuListener"/>
             <Button
-                android:id="@+id/btnGallery"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnMap"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Галерея"
-                android:theme="@style/MyButton"
+                android:text="@string/map"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
+                android:onClick="menuListener"/>
+            <Button
+                android:id="@+id/btnHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/history"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
+                android:onClick="menuListener"/>
+            <Button
+                android:id="@+id/btnContactInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contacts"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
                 android:onClick="menuListener"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <Button
                 android:id="@+id/btnReplaced"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Заміни"
-                android:theme="@style/MyButton"
+                android:text="@string/replace"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
                 android:onClick="menuListener"/>
             <Button
                 android:id="@+id/btnTimetable"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Розклад"
-                android:theme="@style/MyButton"
-                android:onClick="menuListener"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btnHistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Історія"
-                android:theme="@style/MyButton"
+                android:text="@string/timetable"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
                 android:onClick="menuListener"/>
             <Button
                 android:id="@+id/btnLeadership"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Керівництво"
-                android:theme="@style/MyButton"
+                android:text="@string/headCollege"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
+                android:onClick="menuListener"/>
+            <Button
+                android:id="@+id/btnApplicants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/applicants"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_light"
+                android:background="@drawable/btn_style"
                 android:onClick="menuListener"/>
         </LinearLayout>
-
-
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ public class ReplaceModel implements Serializable{
     private String subject;
     private String teacher;
     private String audience;
+    private String date;
 
     public ReplaceModel(String group, String pair, String replaced, String subject, String teacher, String audience) {
         this.group = group;
@@ -17,6 +18,14 @@ public class ReplaceModel implements Serializable{
         this.subject = subject;
         this.teacher = teacher;
         this.audience = audience;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getGroup() {

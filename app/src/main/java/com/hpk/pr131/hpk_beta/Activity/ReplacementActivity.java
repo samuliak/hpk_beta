@@ -3,6 +3,7 @@ package com.hpk.pr131.hpk_beta.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -32,12 +33,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ReplacementActivity extends AppCompatActivity {
-    private volatile Map<String, List<ReplaceModel>> listOfObj;
+    private Map<String, List<ReplaceModel>> listOfObj;
     private List<String> listGroup;
     private List<List<ReplaceModel>> listModel;
     private ProgressDialog progressDialog;
@@ -69,6 +71,10 @@ public class ReplacementActivity extends AppCompatActivity {
             listOfObj = (Map<String, List<ReplaceModel>>) is.readObject();
             is.close();
             fis.close();
+            for (Map.Entry<String, List<ReplaceModel>> entry : listOfObj.entrySet()) {
+                listGroup.add(entry.getKey());
+                listModel.add(entry.getValue());
+            }
             initCardViewInfo();
         } catch (IOException e) {
         } catch (ClassNotFoundException e) {
@@ -77,31 +83,35 @@ public class ReplacementActivity extends AppCompatActivity {
     }
 
     private void initCardViewInfo() {
+        TextView tv = (TextView) findViewById(R.id.dateReplace);
+        assert tv != null;
+        int len = listModel.get(0).get(0).getDate().length();
+        tv.setText(listModel.get(0).get(0).getDate().substring(len - 19, len));
         GridLayout gridLayout = (GridLayout) findViewById(R.id.gridGroup);
         assert gridLayout != null;
         gridLayout.removeAllViews();
         Button btnGroup;
-        int typeSize = display.getHeight()/135;
+        int typeSize = display.getHeight() / 100;
         int total = listGroup.size();
         int column = 4;
         int row = total / column;
         gridLayout.setColumnCount(column);
         gridLayout.setRowCount(row + 1);
-
-        for(int i = 0, c = 0, r = 0; i < total; i++,c++){
-            if(c == column) {
+        Log.e("Samuliak", "total > " + total);
+        for (int i = 0, c = 0, r = 0; i < total; i++, c++) {
+            if (c == column) {
                 c = 0;
                 r++;
             }
             GridLayout.LayoutParams param = new GridLayout.LayoutParams();
             param.height = display.getHeight() / 15;
-            param.width = display.getWidth() / (column+2);
+            param.width = display.getWidth() / (column + 2);
             param.rightMargin = 5;
-            if (c == 0){
-                param.leftMargin = display.getWidth() / (column+4);
+            if (c == 0) {
+                param.leftMargin = display.getWidth() / (column + 4);
             }
-            if (c+1 == column){
-                param.rightMargin = display.getWidth() / (column+4);
+            if (c + 1 == column) {
+                param.rightMargin = display.getWidth() / (column + 4);
             }
             param.setGravity(Gravity.CENTER_HORIZONTAL);
             param.columnSpec = GridLayout.spec(c);
@@ -110,14 +120,12 @@ public class ReplacementActivity extends AppCompatActivity {
             btnGroup = new Button(this);
             btnGroup.setText(listGroup.get(i));
             btnGroup.setTextSize(typeSize);
+            btnGroup.setBackground(null);
+            btnGroup.setTextColor(getResources().getColorStateList(R.color.light_grey));
             btnGroup.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             btnGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("samuliak", "Click is OK");
-                    //CardView cardReplace = (CardView) findViewById(R.id.cardReplace);
-                    //assert cardReplace != null;
-                    //cardReplace.setVisibility(View.VISIBLE);
                     LinearLayout linearReplace = (LinearLayout) findViewById(R.id.linearReplace);
                     assert linearReplace != null;
                     linearReplace.removeAllViews();
@@ -128,15 +136,20 @@ public class ReplacementActivity extends AppCompatActivity {
                     param.width = display.getWidth() / 10;
 
                     List<ReplaceModel> ll = listOfObj.get(((Button) v).getText());
-                   for (ReplaceModel rm : ll) {
-                       if (rm.getGroup() == ((Button) v).getText()) {
-                           TextView tv = new TextView(v.getContext());
-                           tv.setText(rm.toString());
-                           tv.setTextSize(typeSize);
-                           tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                           linearReplace.addView(tv);
-                       }
-                   }
+                    int i = 1;
+                    for (ReplaceModel rm : ll) {
+                        if (rm.getGroup() == ((Button) v).getText()) {
+                            TextView tv = new TextView(v.getContext());
+                            tv.setText(i + ") Група: " + rm.getGroup() + "    |    " + "Пара.:" + rm.getPair()
+                                    + "    |    " + "Ауд.:" + rm.getAudience() + "    |    " + "Предмет:" + rm.getSubject()
+                                    + "    |    " + "Замінено:" + rm.getReplaced() + "    |    " + "Викладач:" + rm.getTeacher());
+                            tv.setTextSize(typeSize);
+                            tv.setTextColor(getResources().getColorStateList(R.color.light_grey));
+                            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            linearReplace.addView(tv);
+                            i++;
+                        }
+                    }
 
                 }
             });
@@ -164,6 +177,7 @@ public class ReplacementActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.hide();
+            progressDialog.dismiss();
             listModel.clear();
             listGroup.clear();
             try {
@@ -173,18 +187,10 @@ public class ReplacementActivity extends AppCompatActivity {
                 os.flush();
                 os.close();
                 fos.close();
-                Log.e("samuliak", "onPostExecute - listofObj.size(): : "+listOfObj.size());
-                for( Map.Entry<String, List<ReplaceModel>> entry : listOfObj.entrySet() ){
+                for (Map.Entry<String, List<ReplaceModel>> entry : listOfObj.entrySet()) {
                     listGroup.add(entry.getKey());
                     listModel.add(entry.getValue());
                 }
-
-                for(List<ReplaceModel> list : listModel){
-                    Log.e("samuliak", "onPostExecute - list.size(): : "+list.size());
-                    for(ReplaceModel rm : list)
-                        Log.e("samuliak", "onPostExecute - rm.toString(): : "+rm.toString());
-                }
-
                 initCardViewInfo();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -207,62 +213,82 @@ public class ReplacementActivity extends AppCompatActivity {
             try {
                 doc = Jsoup.connect(Constants.URL_REPLACEMENT).get();
                 elementParse = doc.select(".news-body td");
-                int k=0;
+                int k = 0;
                 ReplaceModel model;
                 String[] str = new String[6];
                 List<ReplaceModel> list = new ArrayList<>();
                 int count = 0;
-                for(int i=0; i<elementParse.size(); i++){
-                    if ( i > 5) {
-                        if (i+1 < elementParse.size()) {
+                for (int i = 0; i < elementParse.size(); i++) {
+                    if (i > 5) {
+                        //переробити логіку зчитування
+
+                        if (i + 1 < elementParse.size()) {
+
                             if (elementParse.get(i).text().length() < 2 && elementParse.get(i + 1).text().length() < 2
-                                    && elementParse.get(i + 2).text().length() > 20 && k == 0) {
-                                String group = elementParse.get(i + 2).text().substring(0, 6);
-                                model = new ReplaceModel(group, "", "", "", "", "");
-                                list.add(model);
-                                addModelToList(model, list, count);
-                                count++;
-                                str = new String[6];
-                                k = 0;
-                                i = i + 3;
-                                continue;
-                            }
-                        }
-                        if (elementParse.get(i).text().length() < 4 && elementParse.get(i - 1).text().length() < 5 && k == 0 ||
-                                elementParse.get(i).text().length() < 4 && elementParse.get(i - 1).html().contains("p") && k == 0) {
-                            if (elementParse.get(i - 6).text().length() < 5) {
-                                str[k] = elementParse.get(i - 11).text();
-                                k++;
+                                    && elementParse.get(i + 2).text().length() < 2 && elementParse.get(i + 3).text().length() < 2
+                                    && elementParse.get(i + 4).text().length() < 2 && elementParse.get(i + 5).text().length() < 2) {
+                                i = i + 6;
                             } else {
-                                str[k] = elementParse.get(i - 6).text();
-                                k++;
-                            }
-                        } else {
-                            if(i+1<elementParse.size()) {
-                                if (elementParse.get(i).text().length() < 2 && elementParse.get(i + 1).text().length() > 20 && k == 1) {
-                                    str[k] = "";
-                                    k++;
-                                    str[k] = elementParse.get(i + 1).text();
-                                    k = 8;
-                                    if (elementParse.get(i + 2).text().length() < 2 && elementParse.get(i + 3).text().length() > 5) {
-                                        i = i + 2;
+                                if (elementParse.get(i).text().length() < 1 && elementParse.get(i - 1).text().length() < 1
+                                        && elementParse.get(i - 2).text().length() < 1 && elementParse.get(i - 3).text().length() < 1
+                                        && elementParse.get(i - 4).text().length() < 1 && elementParse.get(i - 5).text().length() < 1
+                                        && elementParse.get(i + 1).text().length() > 1) {
+                                    i = i + 1;
+                                } else {
+                                    if (elementParse.get(i).text().length() < 2 && elementParse.get(i + 1).text().length() < 2
+                                            && elementParse.get(i + 2).text().length() > 20 && k == 0) {
+                                        String group = elementParse.get(i + 2).text().substring(0, 6);
+                                        model = new ReplaceModel(group, "", "", "", "", "");
+                                        addModelToList(model, list, count);
+                                        count++;
+                                        str = new String[6];
+                                        k = 0;
+                                        i = i + 3;
+                                        continue;
+                                    }
+
+                                    if (elementParse.get(i).text().length() < 4 && elementParse.get(i - 1).text().length() < 5 && k == 0 ||
+                                            elementParse.get(i).text().length() < 4 && elementParse.get(i - 1).html().contains("p") && k == 0) {
+                                        if (elementParse.get(i - 6).text().length() < 5) {
+                                            str[k] = elementParse.get(i - 11).text();
+                                            k++;
+                                        } else {
+                                            str[k] = elementParse.get(i - 6).text();
+                                            k++;
+                                        }
+                                    } else {
+                                        if (i + 1 < elementParse.size()) {
+                                            if (elementParse.get(i).text().length() < 2 && elementParse.get(i + 1).text().length() > 20 && k == 1) {
+                                                str[k] = "";
+                                                k++;
+                                                str[k] = elementParse.get(i + 1).text();
+                                                k = 8;
+                                                if (elementParse.get(i + 2).text().length() < 2 && elementParse.get(i + 3).text().length() > 5) {
+                                                    i = i + 2;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (k <= 6) {
+                                        str[k] = elementParse.get(i).text();
+                                        k++;
+                                    }
+
+                                    if (k > 5) {
+                                        model = new ReplaceModel(str[0], str[1], str[2], str[3], str[4], str[5]);
+                                        addModelToList(model, list, count);
+                                        count++;
+                                        str = new String[6];
+                                        k = 0;
                                     }
                                 }
                             }
                         }
-                        if (k <= 6) {
-                            str[k] = elementParse.get(i).text();
-                            k++;
-                        }
-
-                        if (k > 5) {
-                            model = new ReplaceModel(str[0], str[1], str[2], str[3], str[4], str[5]);
-                            addModelToList(model, list, count);
-                            count++;
-                            str = new String[6];
-                            k = 0;
-                        }
                     }
+                }
+                elementParse = doc.select(".news-body p");
+                for (Map.Entry<String, List<ReplaceModel>> entry : listOfObj.entrySet()) {
+                    entry.getValue().get(0).setDate(elementParse.get(0).text());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -271,17 +297,16 @@ public class ReplacementActivity extends AppCompatActivity {
         }
 
         private void addModelToList(ReplaceModel model, List<ReplaceModel> list, int count) {
+            Log.e("samuliak", "Model.getGroup > " + model.getGroup());
             list.add(model);
             if (!listOfObj.containsKey(list.get(count).getGroup())) {
                 listOfObj.put(list.get(count).getGroup(), list);
-            }
-            else {
+            } else {
                 List<ReplaceModel> rm = listOfObj.get(list.get(count).getGroup());
                 rm.add(model);
                 listOfObj.put(list.get(count).getGroup(), rm);
             }
             listModel.add(list);
-            //list.clear();
         }
     }
 }

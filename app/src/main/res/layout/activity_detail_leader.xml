@@ -1,87 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
-    <LinearLayout
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/common_back">
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#4F879394"
+    android:layout_margin="30dp">
 
-        <ImageView
-            android:id="@+id/leaderPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/ic_business_center_black_24dp"
-            android:scaleType="centerCrop" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/leaderPhoto"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerInside"/>
             <LinearLayout
+                android:id="@+id/linearInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-                <ImageView
-                    android:id="@+id/image"
-                    android:transitionName="@string/transitionLeaderName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_person_black_24dp"/>
-                <TextView
-                    android:id="@+id/leaderNameDetail"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/leaderPhoto">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textStyle="normal"
-                    android:textColor="@color/cardview_dark_background"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+                    <ImageView
+                        android:transitionName="@string/transitionLeaderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_person_black_24dp"/>
+                    <TextView
+                        android:id="@+id/leaderNameDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/common_plus_signin_btn_text_light_disabled"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_business_center_black_24dp"/>
+                    <TextView
+                        android:id="@+id/leaderPositionDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/common_plus_signin_btn_text_light_disabled"
+                        android:textSize="10sp"/>
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/detailInfo"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:textStyle="normal"
+                android:textSize="10sp"
+                android:layout_below="@id/leaderPhoto"
+                android:textColor="@color/common_plus_signin_btn_text_light_disabled"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_business_center_black_24dp"/>
-                <TextView
-                    android:id="@+id/leaderPositionDetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textStyle="normal"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="10sp"/>
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_access_time_black_24dp"/>
-                <TextView
-                    android:id="@+id/leaderWorkDetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textStyle="normal"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="10sp"/>
-            </LinearLayout>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/detailInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </ScrollView>

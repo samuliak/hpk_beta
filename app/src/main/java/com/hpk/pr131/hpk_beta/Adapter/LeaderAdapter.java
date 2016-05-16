@@ -2,6 +2,7 @@ package com.hpk.pr131.hpk_beta.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,10 @@ import com.hpk.pr131.hpk_beta.Activity.DetailLeaderActivity;
 import com.hpk.pr131.hpk_beta.Model.LeaderModel;
 import com.hpk.pr131.hpk_beta.R;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,10 +70,12 @@ public class LeaderAdapter extends BaseAdapter implements View.OnClickListener{
         TextView name = (TextView) v.findViewById(R.id.leaderName);
         for(int i = 0; i < list.size(); i++) {
             if (list.get(i).getName().equals(name.getText())){
-                intent.putExtra("OBJ", list.get(i));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                v.getContext().startActivity(intent);
-                break;
+                try {
+                    intent.putExtra("OBJ_id", i);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    v.getContext().startActivity(intent);
+                    break;
+                }catch (Exception e) {e.printStackTrace();}
             }
         }
     }
