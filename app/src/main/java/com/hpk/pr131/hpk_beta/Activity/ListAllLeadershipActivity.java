@@ -5,14 +5,17 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.hpk.pr131.hpk_beta.Adapter.LeaderAdapter;
 import com.hpk.pr131.hpk_beta.Constants;
@@ -48,6 +51,7 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_all_leadership);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarLeadership);
         setSupportActionBar(toolbar);
+        MultiDex.install(this);
         lv = (ListView) findViewById(R.id.leaderList);
         try {
             Log.e("samuliak", "Start reading leadership");
@@ -73,12 +77,28 @@ public class ListAllLeadershipActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean isOnline() {
+        String cs = Context.CONNECTIVITY_SERVICE;
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(cs);
+        if (cm.getActiveNetworkInfo() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refreshActivity:
-                progressDialog = new ProgressDialog(this);
-                new ParseLeadership().execute();
+                if ( !isOnline() ){
+                    Toast.makeText(getApplicationContext(),
+                            "Немає з'єднання з мережею Інтернет!",Toast.LENGTH_LONG).show();
+                }else {
+                    progressDialog = new ProgressDialog(this);
+                    new ParseLeadership().execute();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

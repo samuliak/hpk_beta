@@ -2,14 +2,18 @@ package com.hpk.pr131.hpk_beta.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.R;
@@ -36,7 +40,10 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarHistory);
         setSupportActionBar(toolbar);
+        MultiDex.install(this);
         tv = (TextView) findViewById(R.id.historyCollege);
+        Typeface typeface2 = Typeface.createFromAsset(getAssets(), Constants.fontText);
+        tv.setTypeface(typeface2);
         try {
             FileInputStream fis = openFileInput(Constants.FILE_HISTORY);
             ObjectInputStream is = new ObjectInputStream(fis);
@@ -58,12 +65,28 @@ public class HistoryActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean isOnline() {
+        String cs = Context.CONNECTIVITY_SERVICE;
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(cs);
+        if (cm.getActiveNetworkInfo() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refreshActivity:
-                progressDialog = new ProgressDialog(this);
-                new ParseHistory().execute();
+                if ( !isOnline() ){
+                    Toast.makeText(getApplicationContext(),
+                            "Немає з'єднання з мережею Інтернет!",Toast.LENGTH_LONG).show();
+                }else {
+                    progressDialog = new ProgressDialog(this);
+                    new ParseHistory().execute();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

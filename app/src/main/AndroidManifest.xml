@@ -10,11 +10,11 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:name="android.support.multidex.MultiDexApplication">
+        android:supportsRtl="true">
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MainActivity"
@@ -30,8 +30,9 @@
             android:name=".Activity.ListAllLeadershipActivity"
             android:label="@string/title_activity_list_all_leadership"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.DetailLeaderActivity"
-            android:theme="@style/Theme.AppCompat"/>
+        <activity
+            android:name=".Activity.DetailLeaderActivity"
+            android:theme="@style/Theme.AppCompat" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -55,14 +56,20 @@
             android:name=".Activity.NewsActivity"
             android:label="@string/title_activity_news"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.DetailNews"
-            android:theme="@style/Theme.AppCompat"/>
-        <activity android:name=".Activity.MapActivity"
-            android:theme="@style/Theme.AppCompat"/>
-        <activity android:name=".Activity.ContactActivity"
-            android:theme="@style/Theme.AppCompat"/>
-        <activity android:name=".Activity.Applicants"
-            android:theme="@style/Theme.AppCompat"></activity>
+        <activity
+            android:name=".Activity.DetailNews"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".Activity.MapActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".Activity.ContactActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".Activity.ApplicantsActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity android:name=".Activity.TimetableActivity"
+            android:theme="@style/Theme.AppCompat" />
     </application>
 
 </manifest>

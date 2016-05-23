@@ -5,15 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.hpk.pr131.hpk_beta.Adapter.NewsAdapter;
 import com.hpk.pr131.hpk_beta.Constants;
@@ -45,12 +48,18 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        MultiDex.install(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ParseNews().execute();
+                if ( !isOnline() ){
+                    Toast.makeText(getBaseContext(),
+                            "Немає з'єднання з мережею Інтернет!",Toast.LENGTH_LONG).show();
+                }else {
+                    new ParseNews().execute();
+                }
             }
         });
         try {
@@ -64,6 +73,18 @@ public class NewsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private boolean isOnline() {
+        String cs = Context.CONNECTIVITY_SERVICE;
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(cs);
+        if (cm.getActiveNetworkInfo() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     private class ParseNews extends AsyncTask<Void, String, Void>{
         private Elements elementParse;
@@ -83,7 +104,7 @@ public class NewsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.hide();
-            progressDialog = null;
+            progressDialog.dismiss();
             try {
                 FileOutputStream fos = openFileOutput(Constants.FILE_NEWS, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);

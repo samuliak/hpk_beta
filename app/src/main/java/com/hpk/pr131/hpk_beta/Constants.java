@@ -10,4 +10,9 @@ public class Constants {
     final public static String URL_HISTORY = "http://hpk.edu.ua/history";
     final public static String URL_REPLACEMENT = "http://hpk.edu.ua/replacements";
     final public static String URL_NEWS = "http://hpk.edu.ua/news";
+
+    final public static String fontText = "fonts/Ledger-Regular.ttf";
+    final public static String fontTitle = "fonts/MeticulousArielFinal.ttf";
+    final public static String fontExample = "fonts/FontText.ttf";
+    final public static String fontOneDay = "fonts/fontOne.ttf";
 }

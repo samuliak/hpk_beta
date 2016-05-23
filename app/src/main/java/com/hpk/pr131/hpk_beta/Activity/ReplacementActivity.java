@@ -2,10 +2,11 @@ package com.hpk.pr131.hpk_beta.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.Model.ReplaceModel;
@@ -33,7 +35,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,14 +52,19 @@ public class ReplacementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_replacement);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        MultiDex.install(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog = new ProgressDialog(ReplacementActivity.this);
-                new ParseReplacement().execute();
+                if ( !isOnline() ){
+                    Toast.makeText(getApplicationContext(),
+                            "Немає з'єднання з мережею Інтернет!",Toast.LENGTH_LONG).show();
+                }else {
+                    progressDialog = new ProgressDialog(ReplacementActivity.this);
+                    new ParseReplacement().execute();
+                }
             }
         });
         listOfObj = new HashMap<>();
@@ -82,11 +88,25 @@ public class ReplacementActivity extends AppCompatActivity {
         }
     }
 
+    private boolean isOnline() {
+        String cs = Context.CONNECTIVITY_SERVICE;
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(cs);
+        if (cm.getActiveNetworkInfo() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     private void initCardViewInfo() {
         TextView tv = (TextView) findViewById(R.id.dateReplace);
         assert tv != null;
-        int len = listModel.get(0).get(0).getDate().length();
-        tv.setText(listModel.get(0).get(0).getDate().substring(len - 19, len));
+        if (listModel.size() > 0) {
+            int len = listModel.get(0).get(0).getDate().length();
+            tv.setText(listModel.get(0).get(0).getDate().substring(len - 18, len));
+        }
         GridLayout gridLayout = (GridLayout) findViewById(R.id.gridGroup);
         assert gridLayout != null;
         gridLayout.removeAllViews();
@@ -97,7 +117,6 @@ public class ReplacementActivity extends AppCompatActivity {
         int row = total / column;
         gridLayout.setColumnCount(column);
         gridLayout.setRowCount(row + 1);
-        Log.e("Samuliak", "total > " + total);
         for (int i = 0, c = 0, r = 0; i < total; i++, c++) {
             if (c == column) {
                 c = 0;
@@ -129,7 +148,7 @@ public class ReplacementActivity extends AppCompatActivity {
                     LinearLayout linearReplace = (LinearLayout) findViewById(R.id.linearReplace);
                     assert linearReplace != null;
                     linearReplace.removeAllViews();
-                    int typeSize = display.getHeight() / 110;
+                    int typeSize = display.getHeight() / 90;
                     ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT);
                     param.height = display.getHeight() / 20;
@@ -138,6 +157,7 @@ public class ReplacementActivity extends AppCompatActivity {
                     List<ReplaceModel> ll = listOfObj.get(((Button) v).getText());
                     int i = 1;
                     for (ReplaceModel rm : ll) {
+                        //Log.e("samuliak", "ll.getPair" + rm.getPair());
                         if (rm.getGroup() == ((Button) v).getText()) {
                             TextView tv = new TextView(v.getContext());
                             tv.setText(i + ") Група: " + rm.getGroup() + "    |    " + "Пара.:" + rm.getPair()
@@ -221,9 +241,7 @@ public class ReplacementActivity extends AppCompatActivity {
                 for (int i = 0; i < elementParse.size(); i++) {
                     if (i > 5) {
                         //переробити логіку зчитування
-
                         if (i + 1 < elementParse.size()) {
-
                             if (elementParse.get(i).text().length() < 2 && elementParse.get(i + 1).text().length() < 2
                                     && elementParse.get(i + 2).text().length() < 2 && elementParse.get(i + 3).text().length() < 2
                                     && elementParse.get(i + 4).text().length() < 2 && elementParse.get(i + 5).text().length() < 2) {
@@ -288,7 +306,9 @@ public class ReplacementActivity extends AppCompatActivity {
                 }
                 elementParse = doc.select(".news-body p");
                 for (Map.Entry<String, List<ReplaceModel>> entry : listOfObj.entrySet()) {
-                    entry.getValue().get(0).setDate(elementParse.get(0).text());
+                    for(int i=0; i < entry.getValue().size(); i++ ) {
+                        entry.getValue().get(i).setDate(elementParse.get(0).text());
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -297,9 +317,9 @@ public class ReplacementActivity extends AppCompatActivity {
         }
 
         private void addModelToList(ReplaceModel model, List<ReplaceModel> list, int count) {
-            Log.e("samuliak", "Model.getGroup > " + model.getGroup());
             list.add(model);
             if (!listOfObj.containsKey(list.get(count).getGroup())) {
+                Log.e("samuliak", "list.get(count)"+list.get(count).getPair());
                 listOfObj.put(list.get(count).getGroup(), list);
             } else {
                 List<ReplaceModel> rm = listOfObj.get(list.get(count).getGroup());

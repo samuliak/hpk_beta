@@ -1,19 +1,18 @@
 package com.hpk.pr131.hpk_beta.Activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.hpk.pr131.hpk_beta.R;
-
+import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.hpk.pr131.hpk_beta.R;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -35,5 +34,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng hpk = new LatLng(49.433391, 27.004913);
         mMap.addMarker(new MarkerOptions().position(hpk).title("Marker in HPK"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(hpk));
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(49.433391, 27.004913))
+                .zoom(17)
+                .bearing(45)
+                .tilt(20)
+                .build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        mMap.animateCamera(cameraUpdate);
     }
 }

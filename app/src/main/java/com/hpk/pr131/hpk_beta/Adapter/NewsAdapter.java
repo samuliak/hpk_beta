@@ -1,5 +1,6 @@
 package com.hpk.pr131.hpk_beta.Adapter;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.Model.NewsModel;
 import com.hpk.pr131.hpk_beta.R;
 
@@ -25,6 +27,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             img = (ImageView) v.findViewById(R.id.news_btm);
             title = (TextView) v.findViewById(R.id.news_title);
             date = (TextView) v.findViewById(R.id.news_date);
+            Typeface typeface2 = Typeface.createFromAsset(v.getContext().getAssets(), Constants.fontOneDay);
+            title.setTypeface(typeface2);
+            date.setTypeface(typeface2);
         }
     }
 

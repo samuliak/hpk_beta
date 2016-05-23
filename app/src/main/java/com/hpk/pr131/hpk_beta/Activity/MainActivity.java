@@ -2,6 +2,7 @@ package com.hpk.pr131.hpk_beta.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -10,14 +11,13 @@ import com.hpk.pr131.hpk_beta.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private GoogleApiClient client;
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+        MultiDex.install(this);
     }
 
     public void menuListener(View view) {
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
                 break;
             case R.id.btnApplicants:
-                i = new Intent(this, Applicants.class);
+                i = new Intent(this, ApplicantsActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 break;
@@ -55,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btnLeadership:
                 i = new Intent(this, ListAllLeadershipActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+                break;
+            case R.id.btnTimetable:
+                i = new Intent(this, TimetableActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 break;

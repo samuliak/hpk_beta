@@ -2,6 +2,7 @@ package com.hpk.pr131.hpk_beta.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hpk.pr131.hpk_beta.Activity.DetailLeaderActivity;
+import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.Model.LeaderModel;
 import com.hpk.pr131.hpk_beta.R;
 
@@ -24,6 +26,7 @@ import java.util.List;
 public class LeaderAdapter extends BaseAdapter implements View.OnClickListener{
     private List<LeaderModel> list = new ArrayList<>();
     private Context context;
+    private Typeface typeface;
 
     public LeaderAdapter(Context context, List<LeaderModel> list){
         this.context = context;
@@ -57,9 +60,18 @@ public class LeaderAdapter extends BaseAdapter implements View.OnClickListener{
         TextView lPosition = (TextView) view.findViewById(R.id.leaderPosition);
         TextView lWork = (TextView) view.findViewById(R.id.leaderWork);
 
+        typeface = Typeface.createFromAsset(view.getContext().getAssets(), Constants.fontText);
+        lName.setTypeface(typeface);
         lName.setText(list.get(position).getName());
+
+        typeface = Typeface.createFromAsset(view.getContext().getAssets(), Constants.fontExample);
+        lPosition.setTypeface(typeface);
         lPosition.setText(list.get(position).getPosition());
+
+        typeface = Typeface.createFromAsset(view.getContext().getAssets(), Constants.fontTitle);
+        lWork.setTypeface(typeface);
         lWork.setText(list.get(position).getWork());
+
         view.setOnClickListener(this);
         return view;
     }

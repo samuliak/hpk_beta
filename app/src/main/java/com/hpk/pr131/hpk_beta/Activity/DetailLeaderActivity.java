@@ -1,7 +1,9 @@
 package com.hpk.pr131.hpk_beta.Activity;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ public class DetailLeaderActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_detail_leader);
+            MultiDex.install(this);
             TextView tvName = (TextView) findViewById(R.id.leaderNameDetail);
             TextView tvPosition = (TextView) findViewById(R.id.leaderPositionDetail);
             TextView tvInfo = (TextView) findViewById(R.id.detailInfo);
@@ -46,10 +49,18 @@ public class DetailLeaderActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             assert leader != null;
+
             tvName.setText(leader.getName());
             tvPosition.setText(leader.getPosition());
             tvInfo.setText(leader.getDetailInfo());
             setLeaderPhoto(photo, i);
+
+            Typeface typeface = Typeface.createFromAsset(getAssets(), Constants.fontText);
+            tvName.setTypeface(typeface);
+            tvPosition.setTypeface(typeface);
+
+            typeface = Typeface.createFromAsset(getAssets(), Constants.fontExample);
+            tvInfo.setTypeface(typeface);
 
         }catch (Exception e){e.printStackTrace();}
     }

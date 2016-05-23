@@ -24,6 +24,10 @@
     <string name="title_activity_history">Історія коледжа</string>
     <string name="title_activity_replacement">Заміни у розкладі</string>
     <string name="title_activity_news">Новини і події</string>
+    <string name="topic">Тема:</string>
+    <string name="text">Текст:</string>
+    <string name="Feedback">Зворотній зв\'язок</string>
+    <string name="send">Відправити</string>
 
 
 </resources>

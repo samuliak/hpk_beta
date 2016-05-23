@@ -1,27 +1,22 @@
 package com.hpk.pr131.hpk_beta.Activity;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hpk.pr131.hpk_beta.Constants;
 import com.hpk.pr131.hpk_beta.Model.NewsModel;
-import com.hpk.pr131.hpk_beta.Model.ReplaceModel;
 import com.hpk.pr131.hpk_beta.R;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.net.URL;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
+
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 public class DetailNews extends AppCompatActivity {
 
@@ -29,10 +24,11 @@ public class DetailNews extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_news);
+        MultiDex.install(this);
         int position = (int) getIntent().getExtras().get("OBJ_ID");
         TextView title = (TextView) findViewById(R.id.d_title);
         TextView textView = (TextView) findViewById(R.id.d_info);
-        ImageView im = (ImageView) findViewById(R.id.d_img);
+        ImageViewTouch im = (ImageViewTouch) findViewById(R.id.d_img);
         assert textView != null;
         NewsModel news = null;
         try {
@@ -49,8 +45,14 @@ public class DetailNews extends AppCompatActivity {
         assert title != null;
         assert news != null;
         im.setImageDrawable(new BitmapDrawable(getResources(), news.getPhoto()));
-        textView.setText(news.getLong_Info());
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), Constants.fontText);
+        Typeface typeface2 = Typeface.createFromAsset(getAssets(), Constants.fontOneDay);
+
+        textView.setTypeface(typeface);
+        title.setTypeface(typeface2);
         title.setText(news.getTitle());
+        textView.setText(news.getLong_Info());
     }
 }
 
