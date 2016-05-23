@@ -1,2 +1,2 @@
-# hpk_beta
+# ХПК НУ"ЛП"
 Application for HPK
